@@ -1,10 +1,10 @@
 /* ==========================================================
    JUNIOR PELUQUERÍA · main.js
-   Maquinilla 3D: baja a la misma velocidad que el scroll
-   y su recorrido termina al llegar a la sección de Servicios
+   Maquinilla 3D: siempre visible, baja a velocidad real 1:1
+   y aterriza al llegar a la sección de Servicios
    ========================================================== */
 
-// ---------- Navbar: efecto al hacer scroll ----------
+// ---------- Navbar ----------
 const navbar = document.getElementById("navbar");
 
 // ---------- Menú móvil ----------
@@ -20,7 +20,7 @@ navLinks.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", () => navLinks.classList.remove("open"));
 });
 
-// ---------- Animaciones "reveal" al hacer scroll ----------
+// ---------- Animaciones "reveal" ----------
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -73,7 +73,7 @@ const observerStats = new IntersectionObserver(
 const stats = document.querySelector(".stats");
 if (stats) observerStats.observe(stats);
 
-// ---------- MAQUINILLA 3D: VELOCIDAD REAL 1:1 HASTA SERVICIOS ----------
+// ---------- MAQUINILLA 3D ----------
 const about = document.getElementById("sobre-nosotros");
 const clipper = document.getElementById("clipper3d");
 const clipperStage = document.querySelector(".clipper-stage");
@@ -88,29 +88,36 @@ function actualizarClipper() {
 
   if (!mqEscritorio.matches || !about || !clipper || !clipperStage) return;
 
-  const H = window.innerHeight;                 // alto de la pantalla
-  const rect = about.getBoundingClientRect();   // posición de la sección
-  const R = rect.height - H;                    // recorrido de scroll de la sección
+  const H = window.innerHeight;
+  const rect = about.getBoundingClientRect();
+  const R = rect.height - H; // recorrido de scroll de la sección
 
   if (R <= 0) return;
 
-  // Píxeles que el visitante ha bajado dentro de "Sobre nosotros" (0 → R)
+  // Píxeles bajados dentro de "Sobre nosotros" (0 → R)
   const s = Math.min(Math.max(-rect.top, 0), R);
 
   const stageH = clipperStage.offsetHeight;
 
-  // ---- DESCENSO A VELOCIDAD REAL (1:1) ----
-  // Y0 = posición inicial en pantalla (por encima del borde superior).
-  // Al sumarle "s" (lo bajado), baja 1 px por cada 1 px de scroll.
-  // Cuando s = R (Servicios entra en pantalla), Y = H + stageH/2 →
-  // justo ha terminado de bajar al llegar a Servicios.
-  const Y0 = H + stageH * 0.5 - R;
-  const Y = Y0 + s;              // centro de la maquinilla en pantalla
-  const translateY = Y - H / 2;  // desplazamiento respecto a su sitio fijo
+  // Posiciones en pantalla (centro de la maquinilla):
+  const Ystart = stageH / 2 + 12;          // arriba, totalmente visible
+  const Ypark  = H - stageH / 2 - 12;      // abajo, totalmente visible
+  const travel = Math.max(160, Ypark - Ystart); // recorrido de bajada 1:1
 
+  // La bajada 1:1 empieza justo para aterrizar en Ypark cuando s = R
+  const sStart = Math.max(0, R - travel);
+
+  let Y;
+  if (s <= sStart) {
+    Y = Ystart;                 // visible arriba, girando (sin desaparecer)
+  } else {
+    Y = Ystart + (s - sStart);  // bajada a velocidad REAL 1:1
+  }
+
+  const translateY = Y - H / 2;
   clipperStage.style.transform = `translateY(${translateY.toFixed(1)}px)`;
 
-  // ---- GIRO 360° repartido en todo el descenso ----
+  // ---------- Giro 360° repartido en toda la sección ----------
   const progreso = s / R;
   const grados = progreso * 360;
   const rad = (grados * Math.PI) / 180;
@@ -118,7 +125,7 @@ function actualizarClipper() {
   clipper.style.transform =
     `rotateY(${grados.toFixed(2)}deg) rotateX(${(Math.sin(progreso * Math.PI) * 10).toFixed(2)}deg)`;
 
-  // ---- Sombra dinámica ----
+  // ---------- Sombra dinámica ----------
   const escala = 0.35 + 0.65 * Math.abs(Math.cos(rad));
   clipperShadow.style.transform = `translateX(-50%) scaleX(${escala.toFixed(3)})`;
   clipperShadow.style.opacity = (0.25 + 0.5 * Math.abs(Math.cos(rad))).toFixed(2);
