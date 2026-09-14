@@ -31,7 +31,7 @@
     </button>
   </header>
 
-  <!-- ===================== PORTADA (fondo: img/portada.jpg) ===================== -->
+  <!-- ===================== PORTADA ===================== -->
   <section class="hero" id="inicio">
     <div class="hero-content">
       <p class="hero-eyebrow">Peluquería latina masculina · Sevilla</p>
@@ -59,11 +59,11 @@
     </a>
   </section>
 
-  <!-- ===================== SOBRE NOSOTROS + MAQUINILLA 3D ===================== -->
+  <!-- ===================== SOBRE NOSOTROS + OBJETOS 3D ===================== -->
   <section class="about" id="sobre-nosotros">
     <div class="about-grid">
 
-      <!-- Columna izquierda: información y fotos reales (sin texto encima) -->
+      <!-- Columna izquierda -->
       <div class="about-left">
         <div class="reveal">
           <p class="section-eyebrow">Sobre nosotros</p>
@@ -95,7 +95,6 @@
           </div>
         </div>
 
-        <!-- Foto real: collage de cortes -->
         <figure class="photo-card reveal">
           <img src="img/cortes.jpg" alt="Colección de cortes y degradados"
                onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('foto-faltante');">
@@ -106,7 +105,6 @@
           <span>— Antonio A. · Reseña de Google</span>
         </div>
 
-        <!-- Foto real: interior con vitrina -->
         <figure class="photo-card tilt reveal">
           <img src="img/local1.jpg" alt="Interior de la peluquería"
                onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('foto-faltante');">
@@ -122,21 +120,28 @@
           </ul>
         </div>
 
-        <!-- Foto real: barberos trabajando -->
         <figure class="photo-card reveal">
           <img src="img/local2.jpg" alt="Barberos trabajando en el local"
                onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('foto-faltante');">
         </figure>
       </div>
 
-      <!-- Columna derecha: MAQUINILLA 3D CSS girando 360° con el scroll -->
+      <!-- Columna derecha: 3 objetos 3D que bajan y giran con el scroll -->
       <div class="about-right">
         <div class="clipper-sticky">
-          <p class="clipper-eyebrow">Herramienta profesional</p>
+          <p class="clipper-eyebrow">Herramientas profesionales</p>
 
           <div class="clipper-stage">
             <div class="clipper-ring" aria-hidden="true"></div>
 
+            <!-- CILINDRO DE BARBERO 3D (azul, blanco y rojo) -->
+            <div class="barber-pole-3d" id="barberPole3d" aria-hidden="true">
+              <div class="pole-top"></div>
+              <div class="pole-body"></div>
+              <div class="pole-bottom"></div>
+            </div>
+
+            <!-- MAQUINILLA 3D -->
             <div class="clipper-3d" id="clipper3d">
               <div class="clipper-float">
                 <div class="cbox cbox-body">
@@ -156,6 +161,15 @@
                   <i class="face h-bottom"></i>
                 </div>
               </div>
+            </div>
+
+            <!-- TIJERAS 3D -->
+            <div class="scissors-3d" id="scissors3d" aria-hidden="true">
+              <div class="scissors-core"></div>
+              <div class="scissors-blade blade-one"></div>
+              <div class="scissors-blade blade-two"></div>
+              <div class="scissors-ring ring-one"></div>
+              <div class="scissors-ring ring-two"></div>
             </div>
 
             <div class="clipper-shadow" id="clipperShadow" aria-hidden="true"></div>
