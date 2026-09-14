@@ -836,3 +836,43 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal { opacity: 1; transform: none; }
 }
+/* ---------------- Botón Booksy (color corporativo teal) ---------------- */
+.btn-booksy {
+  background: #05cfa6;
+  color: #00352b;
+  font-weight: 700;
+  box-shadow: 0 12px 30px rgba(5, 207, 166, 0.3);
+}
+
+.btn-booksy:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(5, 207, 166, 0.45);
+}
+
+/* Badge verde Booksy en la portada */
+.badge-booksy {
+  border-color: rgba(5, 207, 166, 0.4);
+  color: #05cfa6;
+}
+
+/* Duración de cada servicio */
+.service-group .dur {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+/* Descripción del pack Yunior Gol */
+.pack-desc {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Contenedor del botón Booksy bajo los servicios */
+.booksy-cta-wrap {
+  text-align: center;
+  margin-top: 45px;
+}
