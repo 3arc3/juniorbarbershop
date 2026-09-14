@@ -63,7 +63,7 @@
   <section class="about" id="sobre-nosotros">
     <div class="about-grid">
 
-      <!-- Columna izquierda: información y fotos -->
+      <!-- Columna izquierda: información e ilustraciones -->
       <div class="about-left">
         <div class="reveal">
           <p class="section-eyebrow">Sobre nosotros</p>
@@ -95,8 +95,23 @@
           </div>
         </div>
 
+        <!-- Ilustración 1: el corte. ¿Foto real? Sustituye el div.photo-art por <img src="img/corte.jpg" alt="..."> -->
         <figure class="photo-card reveal">
-          <img src="img/corte.jpg" alt="Barbero realizando un degradado con maquinilla">
+          <div class="photo-art">
+            <svg viewBox="0 0 240 180" aria-hidden="true">
+              <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M96 152c-9-36-7-64 4-88l8-18c14-9 30-9 44 0l8 18c11 24 13 52 4 88-22 8-46 8-68 0z"/>
+                <path d="M100 46h48"/>
+                <path d="M106 46v-12M116 46v-12M126 46v-12M136 46v-12M146 46v-12"/>
+                <circle cx="122" cy="98" r="7"/>
+                <path d="M110 130h24"/>
+              </g>
+              <g fill="currentColor" opacity=".45">
+                <circle cx="60" cy="70" r="3"/><circle cx="52" cy="90" r="3"/><circle cx="48" cy="112" r="3"/>
+                <circle cx="184" cy="70" r="3"/><circle cx="192" cy="90" r="3"/><circle cx="196" cy="112" r="3"/>
+              </g>
+            </svg>
+          </div>
           <figcaption>Degradados y fades de precisión milimétrica</figcaption>
         </figure>
 
@@ -105,8 +120,22 @@
           <span>— Antonio A. · Reseña de Google</span>
         </div>
 
+        <!-- Ilustración 2: herramientas -->
         <figure class="photo-card tilt reveal">
-          <img src="img/herramientas.jpg" alt="Herramientas profesionales de barbería">
+          <div class="photo-art">
+            <svg viewBox="0 0 240 180" aria-hidden="true">
+              <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="52" cy="132" r="13"/>
+                <circle cx="84" cy="132" r="13"/>
+                <path d="M60 121 L128 40 M76 121 L40 44"/>
+                <circle cx="84" cy="100" r="4"/>
+                <path d="M170 34 v112"/>
+                <path d="M170 44 h26 M170 58 h26 M170 72 h26 M170 86 h26 M170 100 h26 M170 114 h26 M170 128 h26"/>
+                <path d="M36 66 l34 -14"/>
+                <rect x="68" y="40" width="52" height="16" rx="4" transform="rotate(-16 68 40)"/>
+              </g>
+            </svg>
+          </div>
           <figcaption>Herramienta profesional, desinfectada a diario</figcaption>
         </figure>
 
@@ -120,24 +149,59 @@
           </ul>
         </div>
 
+        <!-- Ilustración 3: zona de lavados -->
         <figure class="photo-card reveal">
-          <img src="img/lavacabezas.jpg" alt="Zona de lavados del local">
+          <div class="photo-art">
+            <svg viewBox="0 0 240 180" aria-hidden="true">
+              <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M52 96c8 46 128 46 136 0"/>
+                <path d="M46 96h148"/>
+                <path d="M120 96v-24q0-12 14-12h12"/>
+                <path d="M150 74v8"/>
+                <path d="M70 96c-4-26 6-44 22-52M92 44q14 4 12 20M78 56q-14 2-14 16"/>
+                <circle cx="60" cy="34" r="8"/><circle cx="120" cy="26" r="8"/><circle cx="180" cy="34" r="8"/>
+                <path d="M60 42v10M120 34v12M180 42v10"/>
+              </g>
+            </svg>
+          </div>
           <figcaption>Zona de lavados y tratamientos capilares</figcaption>
         </figure>
       </div>
 
-      <!-- Columna derecha: maquinilla girando 360° en 3D -->
+      <!-- Columna derecha: MAQUINILLA 3D CONSTRUIDA CON CSS, gira 360° con el scroll -->
       <div class="about-right">
         <div class="clipper-sticky">
           <p class="clipper-eyebrow">Herramienta profesional</p>
 
           <div class="clipper-stage">
             <div class="clipper-ring" aria-hidden="true"></div>
+
             <div class="clipper-3d" id="clipper3d">
-              <div class="clipper-card">
-                <img src="img/maquinilla.png" alt="Maquinilla de corte profesional">
+              <div class="clipper-float">
+
+                <!-- Cuerpo de la maquinilla (caja 3D) -->
+                <div class="cbox cbox-body">
+                  <i class="face f-front"></i>
+                  <i class="face f-back"></i>
+                  <i class="face f-right"></i>
+                  <i class="face f-left"></i>
+                  <i class="face f-top"></i>
+                  <i class="face f-bottom"></i>
+                </div>
+
+                <!-- Cabezal metálico (caja 3D) -->
+                <div class="cbox cbox-head">
+                  <i class="face h-front"></i>
+                  <i class="face h-back"></i>
+                  <i class="face h-right"></i>
+                  <i class="face h-left"></i>
+                  <i class="face h-top"></i>
+                  <i class="face h-bottom"></i>
+                </div>
+
               </div>
             </div>
+
             <div class="clipper-shadow" id="clipperShadow" aria-hidden="true"></div>
           </div>
 
