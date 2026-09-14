@@ -1,6 +1,6 @@
 /* ==========================================================
    JUNIOR PELUQUERÍA · styles.css
-   Objetos 3D en columna vertical: cilindro → maquinilla → tijeras
+   Objetos 3D en columna con MUCHA separación (gap: 45vh)
    ========================================================== */
 
 :root {
@@ -315,18 +315,17 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 }
 
 /* ==========================================================
-   ESCENARIO 3D DERECHO · COLUMNA VERTICAL
-   Orden: cilindro → maquinilla → tijeras
+   COLUMNA DERECHA · OBJETOS 3D CON MUCHA SEPARACIÓN
+   Fluyen con la página (velocidad real del scroll)
    ========================================================== */
 .clipper-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  position: static;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 26px;
+  gap: 22px;
+  padding: 30px 0;
 }
 
 .clipper-eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-size: 0.75rem; font-weight: 600; }
@@ -334,17 +333,20 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 .clipper-stage {
   position: relative;
   width: min(420px, 100%);
-  height: 780px;
-  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 45vh;               /* ←←← LA SEPARACIÓN ENTRE OBJETOS: cámbiala aquí */
+  padding: 12vh 0;
   perspective: 1400px;
 }
 
-/* Línea vertical decorativa que conecta los 3 objetos */
+/* Línea dorada que conecta los 3 objetos a lo largo de toda la columna */
 .clipper-ring {
   position: absolute;
   left: 50%;
-  top: 30px;
-  bottom: 30px;
+  top: 0;
+  bottom: 0;
   width: 0;
   border-left: 2px dashed var(--gold-soft);
 }
@@ -359,7 +361,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
   background: var(--gold);
   border-radius: 50%;
   box-shadow: 0 0 18px var(--gold);
-  animation: lineTravel 5s linear infinite;
+  animation: lineTravel 6s linear infinite;
 }
 
 @keyframes lineTravel {
@@ -370,7 +372,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 .clipper-shadow {
   position: absolute;
   left: 50%;
-  bottom: 6px;
+  bottom: -10px;
   width: 60%;
   height: 30px;
   transform: translateX(-50%);
@@ -383,15 +385,12 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .clipper-caption span { color: var(--gold); font-weight: 700; }
 
-/* ---------- OBJETO 1: CILINDRO (arriba) ---------- */
+/* ---------- OBJETO 1: CILINDRO ---------- */
 .barber-pole-3d {
-  position: absolute;
-  top: 10px;                 /* ← posición vertical del cilindro */
-  left: 50%;
-  margin-left: -46px;
+  position: relative;
   width: 92px;
   height: 250px;
-  scale: 0.8;                /* ← tamaño del cilindro */
+  scale: 0.9;
   transform-style: preserve-3d;
   will-change: transform;
   filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.45));
@@ -448,15 +447,12 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .pole-bottom { bottom: 0; box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45), inset 0 6px 10px rgba(255, 255, 255, 0.18); }
 
-/* ---------- OBJETO 2: MAQUINILLA (centro) ---------- */
+/* ---------- OBJETO 2: MAQUINILLA ---------- */
 .clipper-3d {
-  position: absolute;
-  top: 265px;                /* ← posición vertical de la maquinilla */
-  left: 50%;
-  margin-left: -55px;
+  position: relative;
   width: 110px;
   height: 300px;
-  scale: 0.92;               /* ← tamaño de la maquinilla */
+  scale: 1;
   transform-style: preserve-3d;
   will-change: transform;
 }
@@ -542,15 +538,12 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 }
 .cbox-head .h-bottom { transform: rotateX(-90deg) translateZ(28px); }
 
-/* ---------- OBJETO 3: TIJERAS (abajo) ---------- */
+/* ---------- OBJETO 3: TIJERAS ---------- */
 .scissors-3d {
-  position: absolute;
-  top: 560px;                /* ← posición vertical de las tijeras */
-  left: 50%;
-  margin-left: -115px;
+  position: relative;
   width: 230px;
   height: 230px;
-  scale: 0.82;               /* ← tamaño de las tijeras */
+  scale: 0.9;
   transform-style: preserve-3d;
   will-change: transform;
   filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.45));
@@ -788,14 +781,6 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
   100% { box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0); }
 }
 
-/* ---------------- Pantallas bajas (portátiles pequeños) ---------------- */
-@media (max-height: 900px) {
-  .clipper-stage { height: 640px; }
-  .barber-pole-3d { top: 0; scale: 0.66; }
-  .clipper-3d { top: 215px; scale: 0.78; }
-  .scissors-3d { top: 455px; scale: 0.68; }
-}
-
 /* ---------------- Responsive móvil ---------------- */
 @media (max-width: 900px) {
   .nav-links {
@@ -824,18 +809,16 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
   .about-right { order: -1; }
 
-  .clipper-sticky { position: relative; height: auto; padding: 40px 0 10px; }
-
-  .clipper-stage { height: 600px; max-height: none; }
+  .clipper-stage { gap: 25vh; padding: 6vh 0; }
 
   /* En móvil los 3 objetos giran solos */
   .clipper-3d,
   .barber-pole-3d,
   .scissors-3d { animation: spinY 16s linear infinite; }
 
-  .barber-pole-3d { top: 0; scale: 0.62; }
-  .clipper-3d { top: 200px; scale: 0.75; }
-  .scissors-3d { top: 430px; scale: 0.66; }
+  .barber-pole-3d { scale: 0.7; }
+  .clipper-3d { scale: 0.8; }
+  .scissors-3d { scale: 0.7; }
 
   .photo-card img { height: 300px; }
 
