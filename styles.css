@@ -136,7 +136,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .nav-burger span { width: 26px; height: 2px; background: var(--gold); transition: 0.3s; }
 
-/* ---------------- Portada con TU foto de fachada ---------------- */
+/* ---------------- Portada ---------------- */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -250,7 +250,6 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .stat-label { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
 
-/* Fotos reales sin texto encima */
 .photo-card {
   position: relative;
   border-radius: var(--radius);
@@ -264,16 +263,10 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .photo-card:hover { transform: rotate(0deg) scale(1.02); box-shadow: 0 35px 80px rgba(0, 0, 0, 0.65); }
 
-.photo-card img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  transition: transform 0.8s ease;
-}
+.photo-card img { width: 100%; height: 400px; object-fit: cover; transition: transform 0.8s ease; }
 
 .photo-card:hover img { transform: scale(1.06); }
 
-/* Si la foto no existe: placeholder elegante (nunca un hueco roto) */
 .photo-card.foto-faltante {
   aspect-ratio: 4 / 3;
   background:
@@ -321,7 +314,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 }
 
 /* ==========================================================
-   MAQUINILLA 3D CSS (cajas con 6 caras)
+   ESCENARIO 3D DERECHO (maquinilla + cilindro + tijeras)
    ========================================================== */
 .clipper-sticky {
   position: sticky;
@@ -338,10 +331,9 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .clipper-stage {
   position: relative;
-  width: min(460px, 92%);
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
+  width: min(620px, 100%);
+  height: 720px;
+  max-height: 82vh;
   perspective: 1400px;
 }
 
@@ -365,7 +357,33 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 @keyframes spinRing { to { transform: rotate(360deg); } }
 
-.clipper-3d { transform-style: preserve-3d; will-change: transform; }
+.clipper-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  width: 60%;
+  height: 30px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65), transparent 70%);
+  filter: blur(7px);
+  will-change: transform, opacity;
+}
+
+.clipper-caption { color: var(--muted); font-size: 0.8rem; letter-spacing: 1px; }
+
+.clipper-caption span { color: var(--gold); font-weight: 700; }
+
+/* ---------------- MAQUINILLA 3D (centro) ---------------- */
+.clipper-3d {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 110px;
+  height: 300px;
+  margin: -150px 0 0 -55px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
 
 .clipper-float {
   position: relative;
@@ -448,21 +466,163 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 }
 .cbox-head .h-bottom { transform: rotateX(-90deg) translateZ(28px); }
 
-.clipper-shadow {
+/* ---------------- CILINDRO DE BARBERO 3D (arriba derecha) ---------------- */
+.barber-pole-3d {
   position: absolute;
-  left: 50%;
-  bottom: 4%;
-  width: 60%;
-  height: 30px;
-  transform: translateX(-50%);
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65), transparent 70%);
-  filter: blur(7px);
-  will-change: transform, opacity;
+  top: 6%;
+  right: 6%;
+  width: 92px;
+  height: 250px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.45));
 }
 
-.clipper-caption { color: var(--muted); font-size: 0.8rem; letter-spacing: 1px; }
+.pole-body {
+  position: absolute;
+  left: 50%;
+  top: 28px;
+  width: 70px;
+  height: 195px;
+  transform: translateX(-50%);
+  border-radius: 42px;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      #0057ff 0px, #0057ff 18px,
+      #ffffff 18px, #ffffff 36px,
+      #e60023 36px, #e60023 54px,
+      #ffffff 54px, #ffffff 72px
+    );
+  border: 4px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    inset -18px 0 28px rgba(0, 0, 0, 0.35),
+    inset 14px 0 20px rgba(255, 255, 255, 0.28),
+    0 0 24px rgba(201, 162, 75, 0.25);
+  animation: poleStripes 3s linear infinite;
+}
 
-.clipper-caption span { color: var(--gold); font-weight: 700; }
+@keyframes poleStripes {
+  to { background-position: 0 102px; }
+}
+
+.pole-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(255, 255, 255, 0.34), rgba(0, 0, 0, 0.25));
+  mix-blend-mode: overlay;
+}
+
+.pole-top,
+.pole-bottom {
+  position: absolute;
+  left: 50%;
+  width: 92px;
+  height: 38px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff7d8, #d4b35b 45%, #7c5a17 100%);
+  z-index: 2;
+}
+
+.pole-top { top: 0; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35), inset 0 -6px 10px rgba(0, 0, 0, 0.25); }
+
+.pole-bottom { bottom: 0; box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45), inset 0 6px 10px rgba(255, 255, 255, 0.18); }
+
+/* ---------------- TIJERAS 3D (abajo izquierda) ---------------- */
+.scissors-3d {
+  position: absolute;
+  left: 4%;
+  bottom: 8%;
+  width: 230px;
+  height: 230px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.45));
+}
+
+.scissors-core {
+  position: absolute;
+  left: 104px;
+  top: 104px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, #bfc5ce 45%, #535963 100%);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  z-index: 5;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.28), inset 0 0 8px rgba(0, 0, 0, 0.45);
+}
+
+.scissors-blade {
+  position: absolute;
+  left: 110px;
+  top: 112px;
+  width: 126px;
+  height: 18px;
+  border-radius: 14px 80px 80px 14px;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #dfe4eb, #7d838c 55%, #f8f8f8 100%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.28), inset 0 4px 8px rgba(255, 255, 255, 0.35);
+}
+
+.blade-one { transform: rotate(-35deg); }
+.blade-two { transform: rotate(35deg); }
+
+.scissors-blade::after {
+  content: "";
+  position: absolute;
+  right: -18px;
+  top: 1px;
+  width: 34px;
+  height: 16px;
+  background: linear-gradient(90deg, #bfc5ce, #f9f9f9);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.scissors-ring {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  border: 12px solid #bfc5ce;
+  border-radius: 50%;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.35), 0 0 18px rgba(255, 255, 255, 0.18);
+}
+
+.ring-one { left: 26px; top: 48px; }
+.ring-two { left: 28px; bottom: 42px; }
+
+.ring-one::after,
+.ring-two::after {
+  content: "";
+  position: absolute;
+  width: 92px;
+  height: 14px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #727882, #dce2ea 55%, #777d86);
+  transform-origin: right center;
+  right: -74px;
+  top: 26px;
+}
+
+.ring-one::after { transform: rotate(24deg); }
+.ring-two::after { transform: rotate(-24deg); }
+
+.scissors-3d::after {
+  content: "";
+  position: absolute;
+  left: 96px;
+  top: 96px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 162, 75, 0.6);
+  box-shadow: 0 0 22px rgba(201, 162, 75, 0.35);
+  pointer-events: none;
+}
 
 /* ---------------- Reveal al hacer scroll ---------------- */
 .reveal {
@@ -645,7 +805,20 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
   .clipper-sticky { position: relative; height: auto; padding: 40px 0 10px; }
 
-  .clipper-3d { animation: spinY 16s linear infinite; }
+  .clipper-stage { height: 520px; max-height: none; }
+
+  /* En móvil los 3 objetos giran solos */
+  .clipper-3d,
+  .barber-pole-3d,
+  .scissors-3d { animation: spinY 16s linear infinite; }
+
+  .barber-pole-3d { top: 4%; right: 5%; width: 70px; height: 190px; }
+
+  .pole-body { width: 54px; height: 145px; }
+
+  .pole-top, .pole-bottom { width: 72px; height: 30px; }
+
+  .scissors-3d { left: 0; bottom: 4%; width: 170px; height: 170px; scale: 0.8; }
 
   .photo-card img { height: 300px; }
 
