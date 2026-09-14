@@ -1,5 +1,6 @@
 /* ==========================================================
    JUNIOR PELUQUERÍA · main.js
+   Giro 360° + descenso de la maquinilla con el scroll
    ========================================================== */
 
 // ---------- Navbar: efecto al hacer scroll ----------
@@ -71,9 +72,10 @@ const observerStats = new IntersectionObserver(
 const stats = document.querySelector(".stats");
 if (stats) observerStats.observe(stats);
 
-// ---------- MAQUINILLA 3D: giro de 360° según el scroll ----------
+// ---------- MAQUINILLA 3D: gira 360° Y ADEMÁS BAJA con el scroll ----------
 const about = document.getElementById("sobre-nosotros");
 const clipper = document.getElementById("clipper3d");
+const clipperStage = document.querySelector(".clipper-stage");
 const clipperShadow = document.getElementById("clipperShadow");
 const clipperDeg = document.getElementById("clipperDeg");
 const mqEscritorio = window.matchMedia("(min-width: 901px)");
@@ -83,7 +85,7 @@ let tick = false;
 function actualizarClipper() {
   tick = false;
 
-  if (!mqEscritorio.matches || !about || !clipper) return;
+  if (!mqEscritorio.matches || !about || !clipper || !clipperStage) return;
 
   const rect = about.getBoundingClientRect();
   const total = rect.height - window.innerHeight;
@@ -94,11 +96,15 @@ function actualizarClipper() {
   const grados = progreso * 360;
   const rad = (grados * Math.PI) / 180;
 
-  // Giro 3D completo + inclinación suave para dar volumen
+  // --- DESCENSO: empieza arriba (-20vh) y termina abajo (+20vh) ---
+  const bajada = progreso * 40 - 20;
+  clipperStage.style.transform = `translateY(${bajada.toFixed(2)}vh)`;
+
+  // --- GIRO 3D: 360° completos + inclinación suave ---
   clipper.style.transform =
     `rotateY(${grados.toFixed(2)}deg) rotateX(${(Math.sin(progreso * Math.PI) * 10).toFixed(2)}deg)`;
 
-  // La sombra se estrecha cuando la maquinilla está de canto
+  // --- Sombra: se estrecha cuando está de canto ---
   const escala = 0.35 + 0.65 * Math.abs(Math.cos(rad));
   clipperShadow.style.transform = `translateX(-50%) scaleX(${escala.toFixed(3)})`;
   clipperShadow.style.opacity = (0.25 + 0.5 * Math.abs(Math.cos(rad))).toFixed(2);
