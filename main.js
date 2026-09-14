@@ -1,7 +1,8 @@
 /* ==========================================================
    JUNIOR PELUQUERÍA · main.js
-   Maquinilla 3D: siempre visible, baja a velocidad real 1:1
-   y aterriza al llegar a la sección de Servicios
+   Maquinilla + cilindro + tijeras 3D:
+   siempre visibles, bajan a velocidad real 1:1
+   y aterrizan al llegar a la sección de Servicios
    ========================================================== */
 
 // ---------- Navbar ----------
@@ -73,9 +74,11 @@ const observerStats = new IntersectionObserver(
 const stats = document.querySelector(".stats");
 if (stats) observerStats.observe(stats);
 
-// ---------- MAQUINILLA 3D ----------
+// ---------- OBJETOS 3D ----------
 const about = document.getElementById("sobre-nosotros");
 const clipper = document.getElementById("clipper3d");
+const barberPole = document.getElementById("barberPole3d");
+const scissors = document.getElementById("scissors3d");
 const clipperStage = document.querySelector(".clipper-stage");
 const clipperShadow = document.getElementById("clipperShadow");
 const clipperDeg = document.getElementById("clipperDeg");
@@ -86,7 +89,7 @@ let tick = false;
 function actualizarClipper() {
   tick = false;
 
-  if (!mqEscritorio.matches || !about || !clipper || !clipperStage) return;
+  if (!mqEscritorio.matches || !about || !clipperStage) return;
 
   const H = window.innerHeight;
   const rect = about.getBoundingClientRect();
@@ -99,31 +102,35 @@ function actualizarClipper() {
 
   const stageH = clipperStage.offsetHeight;
 
-  // Posiciones en pantalla (centro de la maquinilla):
-  const Ystart = stageH / 2 + 12;          // arriba, totalmente visible
-  const Ypark  = H - stageH / 2 - 12;      // abajo, totalmente visible
-  const travel = Math.max(160, Ypark - Ystart); // recorrido de bajada 1:1
+  // Posiciones en pantalla (centro del escenario):
+  const Ystart = stageH / 2 + 12;             // arriba, totalmente visible
+  const Ypark  = H - stageH / 2 - 12;         // abajo, totalmente visible
+  const travel = Math.max(160, Ypark - Ystart);
 
-  // La bajada 1:1 empieza justo para aterrizar en Ypark cuando s = R
+  // La bajada 1:1 empieza justo para aterrizar cuando s = R (Servicios)
   const sStart = Math.max(0, R - travel);
 
   let Y;
   if (s <= sStart) {
-    Y = Ystart;                 // visible arriba, girando (sin desaparecer)
+    Y = Ystart;                // visible arriba, girando
   } else {
-    Y = Ystart + (s - sStart);  // bajada a velocidad REAL 1:1
+    Y = Ystart + (s - sStart); // bajada a velocidad REAL 1:1
   }
 
   const translateY = Y - H / 2;
   clipperStage.style.transform = `translateY(${translateY.toFixed(1)}px)`;
 
-  // ---------- Giro 360° repartido en toda la sección ----------
+  // ---------- Giro 360° para los 3 objetos ----------
   const progreso = s / R;
   const grados = progreso * 360;
   const rad = (grados * Math.PI) / 180;
 
-  clipper.style.transform =
+  const giro3D =
     `rotateY(${grados.toFixed(2)}deg) rotateX(${(Math.sin(progreso * Math.PI) * 10).toFixed(2)}deg)`;
+
+  if (clipper) clipper.style.transform = giro3D;
+  if (barberPole) barberPole.style.transform = giro3D;
+  if (scissors) scissors.style.transform = giro3D;
 
   // ---------- Sombra dinámica ----------
   const escala = 0.35 + 0.65 * Math.abs(Math.cos(rad));
