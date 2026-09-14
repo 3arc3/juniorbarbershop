@@ -70,11 +70,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(201, 162, 75, 0.4); }
 
-.btn-ghost {
-  border: 1px solid var(--gold-soft);
-  color: var(--gold);
-  background: transparent;
-}
+.btn-ghost { border: 1px solid var(--gold-soft); color: var(--gold); background: transparent; }
 
 .btn-ghost:hover { background: rgba(201, 162, 75, 0.1); transform: translateY(-3px); }
 
@@ -123,13 +119,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .nav-links { display: flex; gap: 34px; }
 
-.nav-links a {
-  color: var(--text);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  position: relative;
-}
+.nav-links a { color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500; position: relative; }
 
 .nav-links a::after {
   content: "";
@@ -142,22 +132,11 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .nav-links a:hover::after { width: 100%; }
 
-.nav-burger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px;
-}
+.nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
 
 .nav-burger span { width: 26px; height: 2px; background: var(--gold); transition: 0.3s; }
 
-/* ---------------- Portada (sin imagen externa: fondo CSS) ----------------
-   ¿Tienes una foto real del local? Añade esta capa al principio del background:
-   url("img/local.jpg") center / cover no-repeat fixed,
---------------------------------------------------------------------------- */
+/* ---------------- Portada con TU foto de fachada ---------------- */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -168,9 +147,9 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
   position: relative;
   padding: 140px 7vw 90px;
   background:
+    linear-gradient(rgba(10, 10, 13, 0.55), rgba(10, 10, 13, 0.88)),
+    url("img/portada.jpg") center / cover no-repeat fixed,
     radial-gradient(1100px 600px at 75% -10%, rgba(201, 162, 75, 0.16), transparent 60%),
-    radial-gradient(900px 500px at 8% 110%, rgba(201, 162, 75, 0.10), transparent 60%),
-    repeating-linear-gradient(115deg, rgba(201, 162, 75, 0.05) 0 2px, transparent 2px 30px),
     linear-gradient(180deg, #101216 0%, #0d0e11 70%);
 }
 
@@ -184,13 +163,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .hero-content { position: relative; z-index: 2; }
 
-.hero-eyebrow {
-  color: var(--gold);
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
+.hero-eyebrow { color: var(--gold); letter-spacing: 5px; text-transform: uppercase; font-size: 0.8rem; font-weight: 600; }
 
 .hero h1 {
   font-size: clamp(3rem, 8vw, 6.5rem);
@@ -251,12 +224,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 }
 
 /* ---------------- Sobre nosotros ---------------- */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 80px;
-  align-items: start;
-}
+.about-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 80px; align-items: start; }
 
 .about-left > * { margin-bottom: 70px; }
 .about-left > *:last-child { margin-bottom: 0; }
@@ -282,7 +250,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .stat-label { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
 
-/* Tarjetas con ilustración SVG (nunca se rompen) */
+/* Fotos reales sin texto encima */
 .photo-card {
   position: relative;
   border-radius: var(--radius);
@@ -296,26 +264,30 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .photo-card:hover { transform: rotate(0deg) scale(1.02); box-shadow: 0 35px 80px rgba(0, 0, 0, 0.65); }
 
-.photo-art {
+.photo-card img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.photo-card:hover img { transform: scale(1.06); }
+
+/* Si la foto no existe: placeholder elegante (nunca un hueco roto) */
+.photo-card.foto-faltante {
   aspect-ratio: 4 / 3;
-  display: grid;
-  place-items: center;
   background:
     radial-gradient(400px 260px at 70% 20%, rgba(201, 162, 75, 0.14), transparent 65%),
     linear-gradient(160deg, #1b1e24, #0d0f12);
-  color: var(--gold);
+  display: grid;
+  place-items: center;
 }
 
-.photo-art svg { width: 68%; height: auto; filter: drop-shadow(0 6px 18px rgba(201, 162, 75, 0.25)); }
-
-.photo-card figcaption {
-  position: absolute;
-  inset: auto 0 0 0;
-  padding: 40px 22px 18px;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.88));
-  font-size: 0.88rem;
-  color: #f0ede5;
-  font-weight: 500;
+.photo-card.foto-faltante::before {
+  content: "📷 Foto pendiente de añadir en img/";
+  color: var(--gold);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
 }
 
 .quote-card {
@@ -349,7 +321,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 }
 
 /* ==========================================================
-   MAQUINILLA 3D CONSTRUIDA CON CSS (cajas con 6 caras)
+   MAQUINILLA 3D CSS (cajas con 6 caras)
    ========================================================== */
 .clipper-sticky {
   position: sticky;
@@ -362,13 +334,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
   gap: 26px;
 }
 
-.clipper-eyebrow {
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
+.clipper-eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-size: 0.75rem; font-weight: 600; }
 
 .clipper-stage {
   position: relative;
@@ -414,24 +380,22 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
   50%      { transform: translateY(-16px); }
 }
 
-/* Cajas 3D genéricas */
 .cbox { position: absolute; transform-style: preserve-3d; }
 
 .face { position: absolute; backface-visibility: hidden; border-radius: 6px; }
 
-/* --- Cuerpo: 96 ancho x 240 alto x 64 profundo, centrado abajo --- */
+/* Cuerpo: 96 x 240 x 64 */
 .cbox-body { left: 7px; top: 60px; width: 96px; height: 240px; }
 
 .cbox-body .face {
-  background:
-    linear-gradient(160deg, #2b2e36 0%, #14161b 55%, #0b0c0f 100%);
+  background: linear-gradient(160deg, #2b2e36 0%, #14161b 55%, #0b0c0f 100%);
   border: 1px solid rgba(201, 162, 75, 0.35);
   box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.6);
 }
 
-.cbox-body .f-front, .cbox-body .f-back   { width: 96px;  height: 240px; }
-.cbox-body .f-right, .cbox-body .f-left   { width: 64px;  height: 240px; left: 16px; }
-.cbox-body .f-top,   .cbox-body .f-bottom { width: 96px;  height: 64px;  top: 88px; }
+.cbox-body .f-front, .cbox-body .f-back   { width: 96px; height: 240px; }
+.cbox-body .f-right, .cbox-body .f-left   { width: 64px; height: 240px; left: 16px; }
+.cbox-body .f-top,   .cbox-body .f-bottom { width: 96px; height: 64px; top: 88px; }
 
 .cbox-body .f-front  { transform: translateZ(32px); }
 .cbox-body .f-back   { transform: rotateY(180deg) translateZ(32px); }
@@ -440,7 +404,6 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 .cbox-body .f-top    { transform: rotateX(90deg) translateZ(120px); }
 .cbox-body .f-bottom { transform: rotateX(-90deg) translateZ(120px); }
 
-/* Detalles dorados en la cara frontal del cuerpo */
 .cbox-body .f-front::before {
   content: "";
   position: absolute;
@@ -463,7 +426,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
   color: var(--gold);
 }
 
-/* --- Cabezal metálico: 110 ancho x 56 alto x 74 profundo, encima --- */
+/* Cabezal metálico: 110 x 56 x 74 */
 .cbox-head { left: 0; top: 4px; width: 110px; height: 56px; }
 
 .cbox-head .face {
@@ -479,11 +442,12 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 .cbox-head .h-back   { transform: rotateY(180deg) translateZ(37px); }
 .cbox-head .h-right  { transform: rotateY(90deg) translateZ(55px); }
 .cbox-head .h-left   { transform: rotateY(-90deg) translateZ(55px); }
-.cbox-head .h-top    { transform: rotateX(90deg) translateZ(28px);
-  background: repeating-linear-gradient(90deg, #e8ebef 0 6px, #878d96 6px 9px); }
+.cbox-head .h-top    {
+  transform: rotateX(90deg) translateZ(28px);
+  background: repeating-linear-gradient(90deg, #e8ebef 0 6px, #878d96 6px 9px);
+}
 .cbox-head .h-bottom { transform: rotateX(-90deg) translateZ(28px); }
 
-/* Sombra bajo la maquinilla */
 .clipper-shadow {
   position: absolute;
   left: 50%;
@@ -527,11 +491,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
   transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-.service-group:hover {
-  transform: translateY(-8px);
-  border-color: var(--gold);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-}
+.service-group:hover { transform: translateY(-8px); border-color: var(--gold); box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5); }
 
 .service-group h3 {
   font-size: 1.35rem;
@@ -641,4 +601,65 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
   border-radius: 50%;
   background: var(--whatsapp);
   display: grid;
- 
+  place-items: center;
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45);
+  animation: pulse 2.4s ease-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.whatsapp-float:hover { transform: scale(1.12); }
+
+@keyframes pulse {
+  0%   { box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0.5); }
+  70%  { box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45), 0 0 0 22px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 900px) {
+  .nav-links {
+    position: fixed;
+    inset: 64px 0 auto 0;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(13, 14, 17, 0.98);
+    padding: 20px 7vw 30px;
+    transform: translateY(-160%);
+    transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-links.open { transform: translateY(0); }
+
+  .nav-links a { padding: 14px 0; font-size: 1.05rem; }
+
+  .nav-burger { display: flex; }
+
+  .nav-cta { display: none; }
+
+  .hero { background-attachment: scroll; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 30px; }
+
+  .about-right { order: -1; }
+
+  .clipper-sticky { position: relative; height: auto; padding: 40px 0 10px; }
+
+  .clipper-3d { animation: spinY 16s linear infinite; }
+
+  .photo-card img { height: 300px; }
+
+  .stats { grid-template-columns: 1fr; gap: 26px; }
+
+  section { padding: 80px 6vw; }
+}
+
+@keyframes spinY {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
