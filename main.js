@@ -1,8 +1,7 @@
 /* ==========================================================
    JUNIOR PELUQUERÍA · main.js
-   Maquinilla + cilindro + tijeras 3D:
-   siempre visibles, bajan a velocidad real 1:1
-   y aterrizan al llegar a la sección de Servicios
+   Los 3 objetos 3D giran 360° según el scroll de la sección
+   (se mueven con la página a velocidad real del visitante)
    ========================================================== */
 
 // ---------- Navbar ----------
@@ -74,12 +73,11 @@ const observerStats = new IntersectionObserver(
 const stats = document.querySelector(".stats");
 if (stats) observerStats.observe(stats);
 
-// ---------- OBJETOS 3D ----------
+// ---------- OBJETOS 3D: giro 360° con el scroll ----------
 const about = document.getElementById("sobre-nosotros");
 const clipper = document.getElementById("clipper3d");
 const barberPole = document.getElementById("barberPole3d");
 const scissors = document.getElementById("scissors3d");
-const clipperStage = document.querySelector(".clipper-stage");
 const clipperShadow = document.getElementById("clipperShadow");
 const clipperDeg = document.getElementById("clipperDeg");
 const mqEscritorio = window.matchMedia("(min-width: 901px)");
@@ -89,38 +87,14 @@ let tick = false;
 function actualizarClipper() {
   tick = false;
 
-  if (!mqEscritorio.matches || !about || !clipperStage) return;
+  if (!mqEscritorio.matches || !about) return;
 
-  const H = window.innerHeight;
   const rect = about.getBoundingClientRect();
-  const R = rect.height - H; // recorrido de scroll de la sección
+  const R = rect.height - window.innerHeight;
 
   if (R <= 0) return;
 
-  // Píxeles bajados dentro de "Sobre nosotros" (0 → R)
   const s = Math.min(Math.max(-rect.top, 0), R);
-
-  const stageH = clipperStage.offsetHeight;
-
-  // Posiciones en pantalla (centro del escenario):
-  const Ystart = stageH / 2 + 12;             // arriba, totalmente visible
-  const Ypark  = H - stageH / 2 - 12;         // abajo, totalmente visible
-  const travel = Math.max(160, Ypark - Ystart);
-
-  // La bajada 1:1 empieza justo para aterrizar cuando s = R (Servicios)
-  const sStart = Math.max(0, R - travel);
-
-  let Y;
-  if (s <= sStart) {
-    Y = Ystart;                // visible arriba, girando
-  } else {
-    Y = Ystart + (s - sStart); // bajada a velocidad REAL 1:1
-  }
-
-  const translateY = Y - H / 2;
-  clipperStage.style.transform = `translateY(${translateY.toFixed(1)}px)`;
-
-  // ---------- Giro 360° para los 3 objetos ----------
   const progreso = s / R;
   const grados = progreso * 360;
   const rad = (grados * Math.PI) / 180;
@@ -132,10 +106,12 @@ function actualizarClipper() {
   if (barberPole) barberPole.style.transform = giro3D;
   if (scissors) scissors.style.transform = giro3D;
 
-  // ---------- Sombra dinámica ----------
-  const escala = 0.35 + 0.65 * Math.abs(Math.cos(rad));
-  clipperShadow.style.transform = `translateX(-50%) scaleX(${escala.toFixed(3)})`;
-  clipperShadow.style.opacity = (0.25 + 0.5 * Math.abs(Math.cos(rad))).toFixed(2);
+  // Sombra dinámica bajo las tijeras (último objeto)
+  if (clipperShadow) {
+    const escala = 0.35 + 0.65 * Math.abs(Math.cos(rad));
+    clipperShadow.style.transform = `translateX(-50%) scaleX(${escala.toFixed(3)})`;
+    clipperShadow.style.opacity = (0.25 + 0.5 * Math.abs(Math.cos(rad))).toFixed(2);
+  }
 
   if (clipperDeg) clipperDeg.textContent = `${Math.round(grados)}°`;
 }
