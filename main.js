@@ -33,7 +33,7 @@ const observer = new IntersectionObserver(
 
 document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
-// ---------- Contadores animados (años, cortes, valoración) ----------
+// ---------- Contadores animados ----------
 function animarContador(el) {
   const objetivo = parseFloat(el.dataset.target);
   const decimales = parseInt(el.dataset.decimals || "0", 10);
@@ -42,7 +42,7 @@ function animarContador(el) {
 
   function paso(ahora) {
     const progreso = Math.min((ahora - inicio) / duracion, 1);
-    const suavizado = 1 - Math.pow(1 - progreso, 3); // ease-out
+    const suavizado = 1 - Math.pow(1 - progreso, 3);
     const valor = objetivo * suavizado;
 
     el.textContent = valor.toLocaleString("es-ES", {
@@ -71,7 +71,7 @@ const observerStats = new IntersectionObserver(
 const stats = document.querySelector(".stats");
 if (stats) observerStats.observe(stats);
 
-// ---------- Maquinilla girando 360° en 3D según el scroll ----------
+// ---------- MAQUINILLA 3D: giro de 360° según el scroll ----------
 const about = document.getElementById("sobre-nosotros");
 const clipper = document.getElementById("clipper3d");
 const clipperShadow = document.getElementById("clipperShadow");
@@ -94,11 +94,11 @@ function actualizarClipper() {
   const grados = progreso * 360;
   const rad = (grados * Math.PI) / 180;
 
-  // Giro 3D completo + ligera inclinación para dar volumen
+  // Giro 3D completo + inclinación suave para dar volumen
   clipper.style.transform =
-    `rotateY(${grados.toFixed(2)}deg) rotateX(${(Math.sin(progreso * Math.PI) * 8).toFixed(2)}deg)`;
+    `rotateY(${grados.toFixed(2)}deg) rotateX(${(Math.sin(progreso * Math.PI) * 10).toFixed(2)}deg)`;
 
-  // La sombra se estrecha cuando la tarjeta está de canto
+  // La sombra se estrecha cuando la maquinilla está de canto
   const escala = 0.35 + 0.65 * Math.abs(Math.cos(rad));
   clipperShadow.style.transform = `translateX(-50%) scaleX(${escala.toFixed(3)})`;
   clipperShadow.style.opacity = (0.25 + 0.5 * Math.abs(Math.cos(rad))).toFixed(2);
