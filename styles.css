@@ -149,7 +149,7 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
   padding: 140px 7vw 90px;
   background:
     linear-gradient(rgba(10, 10, 13, 0.55), rgba(10, 10, 13, 0.88)),
-    url("img/portada.jpg") center / cover no-repeat fixed,
+    url("portada.jpg") center / cover no-repeat fixed,
     radial-gradient(1100px 600px at 75% -10%, rgba(201, 162, 75, 0.16), transparent 60%),
     linear-gradient(180deg, #101216 0%, #0d0e11 70%);
 }
