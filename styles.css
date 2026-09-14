@@ -1,5 +1,6 @@
 /* ==========================================================
    JUNIOR PELUQUERÍA · styles.css
+   Objetos 3D en columna vertical: cilindro → maquinilla → tijeras
    ========================================================== */
 
 :root {
@@ -314,7 +315,8 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 }
 
 /* ==========================================================
-   ESCENARIO 3D DERECHO (maquinilla + cilindro + tijeras)
+   ESCENARIO 3D DERECHO · COLUMNA VERTICAL
+   Orden: cilindro → maquinilla → tijeras
    ========================================================== */
 .clipper-sticky {
   position: sticky;
@@ -331,36 +333,44 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .clipper-stage {
   position: relative;
-  width: min(620px, 100%);
-  height: 720px;
-  max-height: 82vh;
+  width: min(420px, 100%);
+  height: 780px;
+  max-height: 88vh;
   perspective: 1400px;
 }
 
+/* Línea vertical decorativa que conecta los 3 objetos */
 .clipper-ring {
   position: absolute;
-  inset: 0;
-  border: 1px dashed var(--gold-soft);
-  border-radius: 50%;
-  animation: spinRing 22s linear infinite;
+  left: 50%;
+  top: 30px;
+  bottom: 30px;
+  width: 0;
+  border-left: 2px dashed var(--gold-soft);
 }
 
 .clipper-ring::before {
   content: "";
   position: absolute;
-  top: -5px; left: 50%;
-  width: 10px; height: 10px;
+  left: -6px;
+  top: 0;
+  width: 10px;
+  height: 10px;
   background: var(--gold);
   border-radius: 50%;
   box-shadow: 0 0 18px var(--gold);
+  animation: lineTravel 5s linear infinite;
 }
 
-@keyframes spinRing { to { transform: rotate(360deg); } }
+@keyframes lineTravel {
+  from { top: 0; opacity: 1; }
+  to   { top: 100%; opacity: 0.15; }
+}
 
 .clipper-shadow {
   position: absolute;
   left: 50%;
-  bottom: 2%;
+  bottom: 6px;
   width: 60%;
   height: 30px;
   transform: translateX(-50%);
@@ -373,14 +383,80 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
 .clipper-caption span { color: var(--gold); font-weight: 700; }
 
-/* ---------------- MAQUINILLA 3D (centro) ---------------- */
-.clipper-3d {
+/* ---------- OBJETO 1: CILINDRO (arriba) ---------- */
+.barber-pole-3d {
+  position: absolute;
+  top: 10px;                 /* ← posición vertical del cilindro */
+  left: 50%;
+  margin-left: -46px;
+  width: 92px;
+  height: 250px;
+  scale: 0.8;                /* ← tamaño del cilindro */
+  transform-style: preserve-3d;
+  will-change: transform;
+  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.45));
+}
+
+.pole-body {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 28px;
+  width: 70px;
+  height: 195px;
+  transform: translateX(-50%);
+  border-radius: 42px;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      #0057ff 0px, #0057ff 18px,
+      #ffffff 18px, #ffffff 36px,
+      #e60023 36px, #e60023 54px,
+      #ffffff 54px, #ffffff 72px
+    );
+  border: 4px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    inset -18px 0 28px rgba(0, 0, 0, 0.35),
+    inset 14px 0 20px rgba(255, 255, 255, 0.28),
+    0 0 24px rgba(201, 162, 75, 0.25);
+  animation: poleStripes 3s linear infinite;
+}
+
+@keyframes poleStripes { to { background-position: 0 102px; } }
+
+.pole-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(255, 255, 255, 0.34), rgba(0, 0, 0, 0.25));
+  mix-blend-mode: overlay;
+}
+
+.pole-top,
+.pole-bottom {
+  position: absolute;
+  left: 50%;
+  width: 92px;
+  height: 38px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff7d8, #d4b35b 45%, #7c5a17 100%);
+  z-index: 2;
+}
+
+.pole-top { top: 0; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35), inset 0 -6px 10px rgba(0, 0, 0, 0.25); }
+
+.pole-bottom { bottom: 0; box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45), inset 0 6px 10px rgba(255, 255, 255, 0.18); }
+
+/* ---------- OBJETO 2: MAQUINILLA (centro) ---------- */
+.clipper-3d {
+  position: absolute;
+  top: 265px;                /* ← posición vertical de la maquinilla */
+  left: 50%;
+  margin-left: -55px;
   width: 110px;
   height: 300px;
-  margin: -150px 0 0 -55px;
+  scale: 0.92;               /* ← tamaño de la maquinilla */
   transform-style: preserve-3d;
   will-change: transform;
 }
@@ -466,78 +542,15 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 }
 .cbox-head .h-bottom { transform: rotateX(-90deg) translateZ(28px); }
 
-/* ---------------- CILINDRO DE BARBERO 3D (arriba derecha) ---------------- */
-.barber-pole-3d {
-  position: absolute;
-  top: 6%;
-  right: 6%;
-  width: 92px;
-  height: 250px;
-  transform-style: preserve-3d;
-  will-change: transform;
-  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.45));
-}
-
-.pole-body {
-  position: absolute;
-  left: 50%;
-  top: 28px;
-  width: 70px;
-  height: 195px;
-  transform: translateX(-50%);
-  border-radius: 42px;
-  overflow: hidden;
-  background:
-    repeating-linear-gradient(
-      135deg,
-      #0057ff 0px, #0057ff 18px,
-      #ffffff 18px, #ffffff 36px,
-      #e60023 36px, #e60023 54px,
-      #ffffff 54px, #ffffff 72px
-    );
-  border: 4px solid rgba(255, 255, 255, 0.7);
-  box-shadow:
-    inset -18px 0 28px rgba(0, 0, 0, 0.35),
-    inset 14px 0 20px rgba(255, 255, 255, 0.28),
-    0 0 24px rgba(201, 162, 75, 0.25);
-  animation: poleStripes 3s linear infinite;
-}
-
-@keyframes poleStripes {
-  to { background-position: 0 102px; }
-}
-
-.pole-body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(255, 255, 255, 0.34), rgba(0, 0, 0, 0.25));
-  mix-blend-mode: overlay;
-}
-
-.pole-top,
-.pole-bottom {
-  position: absolute;
-  left: 50%;
-  width: 92px;
-  height: 38px;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff7d8, #d4b35b 45%, #7c5a17 100%);
-  z-index: 2;
-}
-
-.pole-top { top: 0; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35), inset 0 -6px 10px rgba(0, 0, 0, 0.25); }
-
-.pole-bottom { bottom: 0; box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45), inset 0 6px 10px rgba(255, 255, 255, 0.18); }
-
-/* ---------------- TIJERAS 3D (abajo izquierda) ---------------- */
+/* ---------- OBJETO 3: TIJERAS (abajo) ---------- */
 .scissors-3d {
   position: absolute;
-  left: 4%;
-  bottom: 8%;
+  top: 560px;                /* ← posición vertical de las tijeras */
+  left: 50%;
+  margin-left: -115px;
   width: 230px;
   height: 230px;
+  scale: 0.82;               /* ← tamaño de las tijeras */
   transform-style: preserve-3d;
   will-change: transform;
   filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.45));
@@ -775,7 +788,15 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
   100% { box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0); }
 }
 
-/* ---------------- Responsive ---------------- */
+/* ---------------- Pantallas bajas (portátiles pequeños) ---------------- */
+@media (max-height: 900px) {
+  .clipper-stage { height: 640px; }
+  .barber-pole-3d { top: 0; scale: 0.66; }
+  .clipper-3d { top: 215px; scale: 0.78; }
+  .scissors-3d { top: 455px; scale: 0.68; }
+}
+
+/* ---------------- Responsive móvil ---------------- */
 @media (max-width: 900px) {
   .nav-links {
     position: fixed;
@@ -805,20 +826,16 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); margin-bottom: 22px; }
 
   .clipper-sticky { position: relative; height: auto; padding: 40px 0 10px; }
 
-  .clipper-stage { height: 520px; max-height: none; }
+  .clipper-stage { height: 600px; max-height: none; }
 
   /* En móvil los 3 objetos giran solos */
   .clipper-3d,
   .barber-pole-3d,
   .scissors-3d { animation: spinY 16s linear infinite; }
 
-  .barber-pole-3d { top: 4%; right: 5%; width: 70px; height: 190px; }
-
-  .pole-body { width: 54px; height: 145px; }
-
-  .pole-top, .pole-bottom { width: 72px; height: 30px; }
-
-  .scissors-3d { left: 0; bottom: 4%; width: 170px; height: 170px; scale: 0.8; }
+  .barber-pole-3d { top: 0; scale: 0.62; }
+  .clipper-3d { top: 200px; scale: 0.75; }
+  .scissors-3d { top: 430px; scale: 0.66; }
 
   .photo-card img { height: 300px; }
 
